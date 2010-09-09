@@ -1,0 +1,35 @@
+See www.aspcode.net for more info on this
+
+Simple however:
+  <UsingTask AssemblyFile="\code\tools\MSBuildTasks\GitVersion.dll"
+                TaskName="GitVersion"/>
+
+
+  <PropertyGroup Label="versioning">
+    <versioningMajor>1</versioningMajor>
+    <versioningMinor>0</versioningMinor>
+    <versioningBuild>0</versioningBuild>
+    <versioningRevision>0</versioningRevision>
+    <LastCommit>not avail</LastCommit>
+</PropertyGroup>	
+
+
+  <GitVersion LocalPath="$(MSBuildProjectDirectory)">
+    <Output TaskParameter="LastCommit" PropertyName="LastCommit" />
+  </GitVersion>
+
+
+Which you can then use like
+
+  <AssemblyInfo CodeLanguage="CS"
+      OutputFile="ReportUpdater\Properties\AssemblyInfo.cs"
+      AssemblyTitle="ReportUpdater Last commit:$(LastCommit)"
+      AssemblyDescription="ReportUpdater"
+      AssemblyCompany="Systementor AB"
+      AssemblyProduct="ReportUpdater"
+      AssemblyCopyright="Copyright Systementor AB 2010"
+      ComVisible="false"
+      CLSCompliant="false"
+      AssemblyVersion="$(versioningMajor).$(versioningMinor).$(versioningBuild).$(versioningRevision)"
+      AssemblyFileVersion="$(versioningMajor).$(versioningMinor).$(versioningBuild).$(versioningRevision)"
+/>
